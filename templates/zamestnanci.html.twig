@@ -1,0 +1,137 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <h1 class ="text-danger text-center">Seznam našich zaměstnanců</h1>
+    <h2 class="text-center">Tabulka našich zaměstnanců</h2>
+
+    <div class="d-flex justify-content-center mb-4 border-bottom pb-2">
+        <a href="sklad" class="mr-4 text-dark font-weight-bold" style="font-size: 1.5em; margin-right: 40px;">Sklad</a>
+        <a href="objednavky" class="mr-4 text-dark font-weight-bold" style="font-size: 1.5em; margin-right: 40px;">Objednávky</a>
+        <a href="zpravy" class="mr-4 text-dark font-weight-bold" style="font-size: 1.5em; margin-right: 40px;">Zprávy</a>
+        <a href="zakaznici" class="text-dark font-weight-bold" style="font-size: 1.5em;">Zákazníci</a>
+    </div>
+
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Jméno</th>
+                <th>Příjmení</th>
+                <th>Datum přijetí</th>
+                <th>Pozice</th>
+                <th>Plat</th>
+                <th>Přidání/Odebrání platu</th>
+                <th>Akce</th> <!-- Nový sloupec pro tlačítka odstranění a upravení -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for zamestnanec in zamestnanci %}
+                <tr>
+                    <td>{{ zamestnanec.id }}</td>
+                    <td>{{ zamestnanec.jmeno }}</td>
+                    <td>{{ zamestnanec.prijmeni }}</td>
+                    <td>{{ zamestnanec.datumPrichodu }}</td>
+                    <td>{{ zamestnanec.pozice }}</td>
+                    <td id="plat-{{ zamestnanec.id }}" data-plat="{{ zamestnanec.plat }}">{{ zamestnanec.plat }} Kč</td>
+                    <td>
+                        <button onclick="decreasePlat({{ zamestnanec.id }})">-</button>
+                        <button onclick="increasePlat({{ zamestnanec.id }})">+</button>
+                    </td>
+                    <td>
+                        <button onclick="removeEmployee({{ zamestnanec.id }})">Odstranit</button>
+                        <button onclick="editEmployee({{ zamestnanec.id }})">Upravit</button>
+                    </td>
+                </tr>
+            {% endfor %} 
+        </tbody>
+    </table>
+
+    <!-- Pole pro přidání nového zaměstnance -->
+    <div class="mt-4">
+        <h3 class="text-center">Přidat nového zaměstnance</h3>
+        <form id="addEmployeeForm">
+            <div class="form-group">
+                <label for="newEmployeeId">ID:</label>
+                <input type="text" class="form-control" id="newEmployeeId" required>
+            </div>
+            <div class="form-group">
+                <label for="newEmployeeName">Jméno:</label>
+                <input type="text" class="form-control" id="newEmployeeName" required>
+            </div>
+            <div class="form-group">
+                <label for="newEmployeeSurname">Příjmení:</label>
+                <input type="text" class="form-control" id="newEmployeeSurname" required>
+            </div>
+            <div class="form-group">
+                <label for="newEmployeePosition">Pozice:</label>
+                <input type="text" class="form-control" id="newEmployeePosition" required>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="addEmployee()">Přidat zaměstnance</button>
+            <button type="button" class="btn btn-success" onclick="finishEditing()">Dokončit úpravy</button>
+        </form>
+    </div>
+
+    <script>
+        function decreasePlat(zamestnanecId) {
+            let platElement = document.getElementById(`plat-${zamestnanecId}`);
+            let plat = parseInt(platElement.getAttribute('data-plat'));
+            plat -= 1000; // Můžete upravit hodnotu podle potřeby
+            platElement.setAttribute('data-plat', plat);
+            platElement.innerText = `${plat} Kč`;
+            savePlatToLocalStorage(zamestnanecId, plat);
+        }
+
+        function increasePlat(zamestnanecId) {
+            let platElement = document.getElementById(`plat-${zamestnanecId}`);
+            let plat = parseInt(platElement.getAttribute('data-plat'));
+            plat += 1000; // Můžete upravit hodnotu podle potřeby
+            platElement.setAttribute('data-plat', plat);
+            platElement.innerText = `${plat} Kč`;
+            savePlatToLocalStorage(zamestnanecId, plat);
+        }
+
+        function savePlatToLocalStorage(zamestnanecId, plat) {
+            let zamestnanci = JSON.parse(localStorage.getItem('zamestnanci')) || [];
+            let found = false;
+
+            zamestnanci = zamestnanci.map(zamestnanec => {
+                if (zamestnanec.id === zamestnanecId) {
+                    zamestnanec.plat = plat;
+                    found = true;
+                }
+                return zamestnanec;
+            });
+
+            if (!found) {
+                zamestnanci.push({ id: zamestnanecId, plat: plat });
+            }
+
+            localStorage.setItem('zamestnanci', JSON.stringify(zamestnanci));
+        }
+
+         function removeEmployee(employeeId) {
+            alert("Odstranění zaměstnance bylo úspěšné!");      
+        }
+
+        function editEmployee(employeeId) {
+            alert("Informace zkopírované do editoru!");  
+        }
+
+        function addEmployee(employeeId) {
+            alert("Zaměstnanec přidán!");  
+        }
+
+        function finishEditing(employeeId) {
+            alert("Úpravy zaměstnance dokončeny!");  
+        }
+
+        function updateZamestnanciTable() {
+            let zamestnanci = JSON.parse(localStorage.getItem('zamestnanci')) || [];
+            zamestnanci.forEach(zamestnanec => {
+                document.getElementById(`plat-${zamestnanec.id}`).setAttribute('data-plat', zamestnanec.plat);
+                document.getElementById(`plat-${zamestnanec.id}`).innerText = `${zamestnanec.plat} Kč`;
+            });
+        }
+
+        updateZamestnanciTable(); // Aktualizace tabulky při načtení stránky
+    </script>
+{% endblock %}

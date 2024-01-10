@@ -1,0 +1,111 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <h1 class ="text-danger text-center">Seznam našich produktů ve skladě</h1>
+    <h2 class="text-center">Tabulka našich produktů</h2>
+
+    <div class="d-flex justify-content-center mb-4 border-bottom pb-2">
+        <a href="zakaznici" class="mr-4 text-dark font-weight-bold" style="font-size: 1.5em; margin-right: 40px;">Zákaznici</a>
+        <a href="objednavky" class="mr-4 text-dark font-weight-bold" style="font-size: 1.5em; margin-right: 40px;">Objednávky</a>
+        <a href="zpravy" class="mr-4 text-dark font-weight-bold" style="font-size: 1.5em; margin-right: 40px;">Zprávy</a>
+        <a href="zamestnanci" class="text-dark font-weight-bold" style="font-size: 1.5em;">Zamestnanci</a>
+    </div>
+
+    <table class="table table-dark">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Název</th>
+            <th>Počet kusů</th>
+            <th>Poslední kus objednán</th>
+            <th>Přidat/Odebrat</th>        
+        </tr>
+    </thead>
+    <tbody>
+        {% for produkt in produkty %}
+            <tr>
+                <td>{{ produkt.id }}</td>
+                <td>{{ produkt.nazev }}</td>
+                <td id="pocet-{{ produkt.id }}" data-pocet="{{ produkt.pocet }}">{{ produkt.pocet }}x</td>
+                <td>{{ produkt.datum }}</td>
+                <td>
+                    <button onclick="decreaseCount({{ produkt.id }})">-</button>
+                    <button onclick="increaseCount({{ produkt.id }})">+</button>
+                </td>
+            </tr>
+        {% endfor %} 
+    </tbody>
+    </table>
+
+    <div class="mt-4">
+        <h3 class="text-center">Přidání produktu</h3>
+        <form id="productForm">
+            <div class="form-group">
+                <label for="productName">Název produktu:</label>
+                <input type="text" class="form-control" id="productName" required>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="orderProduct()">Objednat produkt</button>
+            <button type="button" class="btn btn-danger" onclick="deleteProduct()">Smazat produkt</button>
+        </form>
+    </div>
+
+    <script>
+        function orderProduct() {
+            // Zde můžete implementovat logiku pro objednání produktu
+            var productName = document.getElementById("productName").value;
+            alert("Produkt '" + productName + "' byl úspěšně objednán!");
+        }
+
+        function deleteProduct() {
+            // Zde můžete implementovat logiku pro smazání produktu
+            var productName = document.getElementById("productName").value;
+            alert("Produkt '" + productName + "' byl smazán!");
+        }
+
+        function decreaseCount(productId) {
+            let productElement = document.getElementById(`pocet-${productId}`);
+            let pocet = parseInt(productElement.getAttribute('data-pocet'));
+            pocet -= 1;
+            productElement.setAttribute('data-pocet', pocet);
+            productElement.innerText = `${pocet}x`;
+            saveToLocalStorage(productId, pocet);
+        }
+
+        function increaseCount(productId) {
+            let productElement = document.getElementById(`pocet-${productId}`);
+            let pocet = parseInt(productElement.getAttribute('data-pocet'));
+            pocet += 1;
+            productElement.setAttribute('data-pocet', pocet);
+            productElement.innerText = `${pocet}x`;
+            saveToLocalStorage(productId, pocet);
+        }
+
+        function saveToLocalStorage(productId, pocet) {
+            let products = JSON.parse(localStorage.getItem('produkty')) || [];
+            let found = false;
+
+            products = products.map(product => {
+                if (product.id === productId) {
+                    product.pocet = pocet;
+                    found = true;
+                }
+                return product;
+            });
+
+            if (!found) {
+                products.push({ id: productId, pocet: pocet });
+            }
+
+            localStorage.setItem('produkty', JSON.stringify(products));
+        }
+
+        function updateTable() {
+            let products = JSON.parse(localStorage.getItem('produkty')) || [];
+            products.forEach(product => {
+                document.getElementById(`pocet-${product.id}`).setAttribute('data-pocet', product.pocet);
+                document.getElementById(`pocet-${product.id}`).innerText = `${product.pocet}x`;
+            });
+        }
+
+        updateTable(); // Aktualizace tabulky při načtení stránky
+    </script>
+{% endblock %}

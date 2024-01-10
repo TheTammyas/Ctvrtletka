@@ -1,0 +1,10 @@
+{
+    "template": "zpravy.html.twig",
+    "vars": {
+        "zamestnanci": [
+        {"id": 1, "jmeno": "Andrej", "prijmeni": "Babiš", "datumPrichodu": "01.05.2023", "pozice": "Skladník"},
+        {"id": 2, "jmeno": "Larry", "prijmeni": "Osborn", "datumPrichodu": "12.10.2022", "pozice": "Manažer IT"},
+        {"id": 3, "jmeno": "John", "prijmeni": "Doe", "datumPrichodu": "01.01.1900", "pozice": "Programátor"}
+        ]
+    }
+}

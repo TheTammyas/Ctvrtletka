@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <h1 class ="text-danger text-center">Seznam našich zákazníků</h1>
+    <h2 class="text-center">Tabulka našich zákazníků</h2>
+
+    <div class="d-flex justify-content-center mb-4 border-bottom pb-2">
+        <a href="sklad" class="mr-4 text-dark font-weight-bold" style="font-size: 1.5em; margin-right: 40px;">Sklad</a>
+        <a href="objednavky" class="mr-4 text-dark font-weight-bold" style="font-size: 1.5em; margin-right: 40px;">Objednávky</a>
+        <a href="zpravy" class="mr-4 text-dark font-weight-bold" style="font-size: 1.5em; margin-right: 40px;">Zprávy</a>
+        <a href="zamestnanci" class="text-dark font-weight-bold" style="font-size: 1.5em;">Zamestnanci</a>
+    </div>
+
+    <table class="table table-dark">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Jméno</th>
+            <th>Přijmeni</th>
+            <th>E-mail</th>            
+            <th>Objednávka</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for zakaznik in zakaznici %}
+            <tr>
+                <td>{{ zakaznik.id }}</td>
+                <td>{{ zakaznik.jmeno }}</td>
+                <td>{{ zakaznik.prijmeni }}</td>
+                <td>{{ zakaznik.email }}</td>
+                <td>#{{ zakaznik.objednavka }}</td>
+            </tr>
+        {% endfor %} 
+    </tbody>
+    </table>
+
+{% endblock %}

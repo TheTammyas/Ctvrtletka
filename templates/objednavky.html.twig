@@ -1,0 +1,59 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <h1 class="text-danger text-center">Seznam našich objednávek</h1>
+    <h2 class="text-center">Tabulka našich objednávek</h2>
+
+    <div class="d-flex justify-content-center mb-4 border-bottom pb-2">
+        <a href="zakaznici" class="mr-4 text-dark font-weight-bold" style="font-size: 1.5em; margin-right: 40px;">Zákaznici</a>
+        <a href="sklad" class="mr-4 text-dark font-weight-bold" style="font-size: 1.5em; margin-right: 40px;">Sklad</a>
+        <a href="zpravy" class="mr-4 text-dark font-weight-bold" style="font-size: 1.5em; margin-right: 40px;">Zprávy</a>
+        <a href="zamestnanci" class="text-dark font-weight-bold" style="font-size: 1.5em;">Zamestnanci</a>
+    </div>
+
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Označení</th>
+                <th>Obsah</th>
+                <th>Datum</th>            
+            </tr>
+        </thead>
+        <tbody>
+            {% for objednavka in objednavky %}
+                <tr>
+                    <td>{{ objednavka.id }}</td>
+                    <td>#{{ objednavka.oznaceni }}</td>
+                    <td>{{ objednavka.obsah }}</td>
+                    <td>{{ objednavka.datum }}</td>
+                </tr>
+            {% endfor %} 
+        </tbody>
+    </table>
+
+    <div class="mt-4">
+        <h3 class="text-center">Úprava objednávek</h3>
+        <form id="ID">
+            <div class="form-group">
+                <label for="orderID">ID objednávky:</label>
+                <input type="text" class="form-control" id="orderID" required>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="deleteUnpaidOrder()">Smazat - nezaplaceno</button>
+            <button type="button" class="btn btn-success" onclick="deleteDeliveredOrder()">Smazat - doručeno</button>
+        </form>
+    </div>
+
+    <script>
+        function deleteUnpaidOrder() {
+            // Zde můžete implementovat logiku pro smazání nezaplacené objednávky
+            var orderID = document.getElementById("orderID").value;
+            alert("Nezaplacená objednávka s ID: " + orderID + " byla smazána!");
+        }
+
+        function deleteDeliveredOrder() {
+            // Zde můžete implementovat logiku pro smazání doručené objednávky
+            var orderID = document.getElementById("orderID").value;
+            alert("Doručená objednávka s ID: " + orderID + " byla smazána!");
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,15 @@
+{
+    "template": "zamestnanci.html.twig",
+    "vars": {
+        "zamestnanci": [
+        {"id": 1, "jmeno": "Andrej", "prijmeni": "Babiš", "datumPrichodu": "01.05.2023", "pozice": "Skladník", "plat": 0},
+        {"id": 2, "jmeno": "Larry", "prijmeni": "Osborn", "datumPrichodu": "12.10.2022", "pozice": "Manažer IT", "plat": 30000},
+        {"id": 3, "jmeno": "John", "prijmeni": "Doe", "datumPrichodu": "01.01.1900", "pozice": "Programátor", "plat": 40000},
+        {"id": 4, "jmeno": "Miloš", "prijmeni": "Novák", "datumPrichodu": "01.01.1900", "pozice": "Programátor", "plat": 40000},
+        {"id": 5, "jmeno": "Petr", "prijmeni": "Jebal", "datumPrichodu": "01.01.1900", "pozice": "Skladník", "plat": 25000},
+        {"id": 6, "jmeno": "Mark", "prijmeni": "Heathcliff", "datumPrichodu": "01.01.1900", "pozice": "Manažer směny", "plat": 40000},
+        {"id": 7, "jmeno": "Julius", "prijmeni": "Power", "datumPrichodu": "01.01.1900", "pozice": "Praktikant", "plat": 0},
+        {"id": 8, "jmeno": "Nicholas", "prijmeni": "Dain", "datumPrichodu": "01.01.1900", "pozice": "Skladník", "plat": 25000}
+        ]
+    }
+}

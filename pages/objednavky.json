@@ -1,0 +1,10 @@
+{
+    "template": "objednavky.html.twig",
+    "vars": {
+        "objednavky": [
+        {"id": 1, "oznaceni": "DFG9820", "obsah": "1x Robotická přítelkyně 2x Coca Cola 2L", "datum": "13.06.2023"},
+        {"id": 2, "oznaceni": "CBD5401", "obsah": "3x Roboticka Přítelkyně 10x Fidget Spinner", "datum": "03.11.2020"},
+        {"id": 3, "oznaceni": "AAA0001", "obsah": "3x Robotická Přítelkyně 1x Fidget Spinner 1x Coca Cola 2L", "datum": "02.12.2024"}
+        ]
+    }
+}

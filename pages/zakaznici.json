@@ -1,0 +1,10 @@
+{
+    "template": "zakaznici.html.twig",
+    "vars": {
+        "zakaznici": [
+        {"id": 1, "jmeno": "Karel", "prijmeni": "Müller", "email": "KarlM@gmail.com", "objednavka": "DFG9820"},
+        {"id": 2, "jmeno": "Antonín", "prijmeni": "Horák", "email": "HorakTonda@gmail.com", "objednavka": "CBD5401"},
+        {"id": 3, "jmeno": "Jane", "prijmeni": "Doe", "email": "DoeIsCool@seznam.cz", "objednavka": "AAA0001"}
+        ]
+    }
+}
